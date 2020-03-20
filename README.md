@@ -1,2 +1,1 @@
-# node-xml-diff
-Created with CodeSandbox
+XML diff using node.
