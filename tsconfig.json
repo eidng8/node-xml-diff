@@ -5,6 +5,9 @@
     "lib": [
       "es2019"
     ],
+    "types": [
+      "jest"
+    ],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

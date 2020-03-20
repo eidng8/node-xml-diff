@@ -10,10 +10,17 @@
   "keywords": [],
   "author": "eidng8",
   "license": "GPL-3.0",
+  "dependencies": {
+    "jsondiffpatch": "^0.4.1",
+    "xml2js": "^0.4.23"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-typescript": "^7.8.3",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^12.12.30",
+    "@types/xml2js": "^0.4.5",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
     "babel-jest": "^25.1.0",
