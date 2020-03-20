@@ -1,9 +1,10 @@
-import path from 'path';
+import {promises} from 'fs';
+import {resolve} from 'path';
 import {toJson, diff} from '../src';
 
 test('it returns object', async () => {
   expect.assertions(1);
-  const file = path.resolve('tests/data/attrA.xml');
+  const file = await read('tests/data/attrA.xml');
   const json = await toJson(file);
   expect(json).toEqual({
     parent: {
@@ -20,10 +21,9 @@ test('it returns object', async () => {
 
 test('it returns difference', async () => {
   expect.assertions(1);
-  const delta = await diff(
-    path.resolve('tests/data/attrA.xml'),
-    path.resolve('tests/data/attrB.xml'),
-  );
+  const f1 = await read('tests/data/attrA.xml');
+  const f2 = await read('tests/data/attrB.xml');
+  const delta = await diff(f1, f2);
   expect(delta).toEqual({
     parent: {
       child: {
@@ -35,3 +35,10 @@ test('it returns difference', async () => {
     },
   });
 });
+
+function read(file: string): Promise<string> {
+  return promises.readFile(
+    resolve(file),
+    {encoding: 'utf-8', flag: 'r'},
+  ) as Promise<string>;
+}
