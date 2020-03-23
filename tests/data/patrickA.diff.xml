@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<diff>
+  <remove sel="/organization_settings/data-processing-plugins"/>
+  <remove sel="/organization_settings/plugin-application-profiles"/>
+  <remove sel="/organization_settings/publishing_pipes"/>
+  <remove sel="/organization_settings/document-status[@parent-path='prolog/metadata'][@status-node='othermeta'][@name-node='@name'][@value-node='@content'][@status-name-value='__status'][@default-value='draft']/option[@name='Obsoleted'][@value='obsoleted'][@color='#FF0000']"/>
+  <remove sel="/organization_settings/document-status[@parent-path='prolog/metadata'][@status-node='othermeta'][@name-node='@name'][@value-node='@content'][@status-name-value='__status'][@default-value='draft']/option[@name='Needs Reevaluation'][@value='needs_reevaluation'][@color='#4F1D1D']"/>
+</diff>
