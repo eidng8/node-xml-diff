@@ -2,7 +2,7 @@ import {promises} from 'fs';
 import {resolve} from 'path';
 import {toJson, diff} from '../src';
 
-test('it returns object', async () => {
+test('attrA.xml is OK', async () => {
   expect.assertions(1);
   const file = await read('tests/data/attrA.xml');
   const json = await toJson(file);
@@ -19,7 +19,7 @@ test('it returns object', async () => {
   });
 });
 
-test('it returns difference', async () => {
+test('attrA.xml diff is OK', async () => {
   expect.assertions(1);
   const f1 = await read('tests/data/attrA.xml');
   const f2 = await read('tests/data/attrB.xml');

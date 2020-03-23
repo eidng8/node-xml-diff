@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <diff>
-  <replace sel="doc/namespace::sp1">urn:sp2:http://diffxml.sf.net</replace>
+  <remove sel="/a/b"/>
+  <add pos="after" sel="/a/c"><b/></add>
 </diff>
