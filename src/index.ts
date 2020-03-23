@@ -1,11 +1,15 @@
-import xml2js from 'xml2js';
+import {Parser, Builder} from 'xml2js';
 import {diff as jsonDiff} from 'jsondiffpatch';
 
-export {diff, toJson};
+export {diff, toJson, toXml};
 
 async function toJson(data: string): Promise<object> {
   return new Promise((resolve, reject) => {
-    new xml2js.Parser().parseString(data, (err: Error, json: object) => {
+    new Parser({
+      explicitChildren: true,
+      preserveChildrenOrder: true,
+      charsAsChildren: true,
+    }).parseString(data, (err: Error, json: object) => {
       if (err) {
         return reject(err);
       }
@@ -21,4 +25,10 @@ async function diff(d1: string, d2: string): Promise<object | undefined> {
         resolve(jsonDiff(j1, j2));
       });
   });
+}
+
+function toXml(data: object): string {
+  const builder = new Builder();
+  const xml = builder.buildObject(data);
+  return xml;
 }
