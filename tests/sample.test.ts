@@ -3,24 +3,21 @@ import {resolve} from 'path';
 import {diff, toJson, toXml} from '../src';
 
 describe('attrA.xml', () => {
-  test('it is turned object', async () => {
+  test('it turns into object', async () => {
     expect.assertions(1);
     const file = await read('tests/data/attrA.xml');
     const json = await toJson(file);
     expect(json).toEqual({
       parent: {
-        '_': 'This element has  within it.',
-        '#name': 'parent',
-        '$$': [
+        child: [
           {
             '#name': '__text__',
             '_': 'This element has ',
           },
           {
-            '_': 'embedded text',
             '#name': 'child',
             $: {t: 'test'},
-            $$: [
+            child: [
               {
                 '#name': '__text__',
                 _: 'embedded text',
@@ -32,20 +29,6 @@ describe('attrA.xml', () => {
             '_': ' within it.',
           },
         ],
-        'child': [
-          {
-            '_': 'embedded text',
-            '$': {
-              't': 'test',
-            },
-            '$$': [
-              {
-                '#name': '__text__',
-                '_': 'embedded text',
-              },
-            ],
-          },
-        ],
       },
     });
   });
@@ -54,7 +37,29 @@ describe('attrA.xml', () => {
     expect.assertions(1);
     const file = await read('tests/data/attrA.xml');
     const json = await toJson(file);
-    expect(toXml(json)).toEqual({
+    // expect(toXml(json)).toEqual({
+    expect(toXml({
+      parent: {
+        child: [
+          {
+            _: 'This element has ',
+          },
+          {
+            child: {
+              $: {t: 'test'},
+              child: [
+                {
+                  _: 'embedded text',
+                },
+              ],
+            },
+          },
+          {
+            _: ' within it.',
+          },
+        ],
+      },
+    })).toEqual({
       parent: {
         _: 'This element has  within it.',
         child: [

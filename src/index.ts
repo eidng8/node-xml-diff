@@ -1,5 +1,10 @@
 import {Parser, Builder} from 'xml2js';
 import {diff as jsonDiff} from 'jsondiffpatch';
+import {
+  IXmlJsonExplicitChildren,
+  IXmlJsonItem,
+  IXmlJsonItemExplicitChildren, IXmlJsonItemRearranged,
+} from './types';
 
 export {diff, toJson, toXml};
 
@@ -9,9 +14,13 @@ async function toJson(data: string): Promise<object> {
       explicitChildren: true,
       preserveChildrenOrder: true,
       charsAsChildren: true,
-    }).parseString(data, (err: Error, json: object) => {
+    }).parseString(data, (err: Error, json: IXmlJsonExplicitChildren) => {
       if (err) {
         return reject(err);
+      }
+      for (const [, item] of Object.entries(json)) {
+        delete item['#name'];
+        rearrangeChildren(item);
       }
       resolve(json);
     });
@@ -31,4 +40,17 @@ function toXml(data: object): string {
   const builder = new Builder();
   const xml = builder.buildObject(data);
   return xml;
+}
+
+function rearrangeChildren(json: IXmlJsonItemExplicitChildren): IXmlJsonItem {
+  if (json.$$) {
+    delete json._;
+    json.child = json.$$;
+    delete json.$$;
+    for (const child of json.child as IXmlJsonItemRearranged[]) {
+      rearrangeChildren(child);
+    }
+  }
+
+  return json;
 }
